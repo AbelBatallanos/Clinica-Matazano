@@ -7,22 +7,36 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
+
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+
     protected $fillable = [
         'name',
+        'lastname',
         'email',
         'password',
+        'fnacimiento',
+        'nameuser',
+        "telf",
+        "ci",
     ];
+
+    public function medico()
+    {
+        return $this->hasOne(Medico::class);
+    }
+    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -58,4 +72,6 @@ class User extends Authenticatable
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
+
+
 }

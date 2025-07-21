@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('secretarias', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('usuario_id')->unique()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

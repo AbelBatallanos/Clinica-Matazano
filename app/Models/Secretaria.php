@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Paciente extends Model
+class Secretaria extends Model
 {
     //
-    protected $fillable = ["usuario_id"];
 }

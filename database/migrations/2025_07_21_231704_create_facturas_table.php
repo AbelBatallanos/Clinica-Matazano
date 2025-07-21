@@ -11,21 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medicos', function (Blueprint $table) {
+        Schema::create('facturas', function (Blueprint $table) {
             $table->id();
-            $table->boolean('disponibilidad');
-            $table->foreignId('usuario_id')->unique()->constrained('users')->onDelete('cascade');
-            $table->foreignId('especialidad_id')->constrained("especialidades");          
             $table->timestamps();
         });
-
-    } 
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('medicos');
+        Schema::dropIfExists('facturas');
     }
 };
