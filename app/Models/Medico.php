@@ -7,7 +7,8 @@ use App\Models\User;
 
 class Medico extends Model
 {
-    //
+    protected $table = 'medicos';
+
     protected $fillable = [
         "disponibilidad",
         "especialidad_id",

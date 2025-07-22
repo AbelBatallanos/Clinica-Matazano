@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\HistorialClinico;
 use App\Models\Paciente;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class PacienteSeeder extends Seeder
@@ -54,14 +56,37 @@ class PacienteSeeder extends Seeder
         $paciente_3->assignRole('paciente');
 
 
-        Paciente::create([
+        $pac_1 = Paciente::create([
             "usuario_id" => $paciente_1->id,
         ]);
-        Paciente::create([
+        $pac_2 = Paciente::create([
             "usuario_id" => $paciente_2->id,
         ]);
-        Paciente::create([
+        $pac_3 = Paciente::create([
             "usuario_id" => $paciente_3->id,
+        ]);
+
+        /// Historial Clinico
+        DB::table("historialesclinicos")->insert([
+            "fechacreacion"=> "2025-07-22",
+            "horacreacion"=> "13:41:54",
+            "paciente_id"=> $pac_1->id,
+            "created_at"=> now(),
+            "updated_at"=> now(),
+        ]);
+        DB::table("historialesclinicos")->insert([
+            "fechacreacion"=> "2025-03-12",
+            "horacreacion"=> "02:41:44",
+            "paciente_id"=> $pac_2->id,
+             "created_at"=> now(),
+            "updated_at"=> now(),
+        ]);
+        DB::table("historialesclinicos")->insert([
+            "fechacreacion"=> "2025-05-02",
+            "horacreacion"=> "09:18:54",
+            "paciente_id"=> $pac_3->id,
+             "created_at"=> now(),
+            "updated_at"=> now(),
         ]);
 
     }

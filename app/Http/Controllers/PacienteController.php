@@ -8,4 +8,8 @@ use Illuminate\Http\Request;
 class PacienteController extends Controller
 {
     //
+    public function listar(){
+        
+    }
+    
 }

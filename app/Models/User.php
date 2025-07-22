@@ -36,7 +36,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Medico::class);
     }
-    
+    public function paciente()
+    {
+        return $this->hasOne(Paciente::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

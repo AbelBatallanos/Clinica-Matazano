@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('facturas', function (Blueprint $table) {
             $table->id();
+            $table->date("fechaemision");
+            $table->string("estadopago");
+            $table->string("metodopago");
+            $table->string("detalleservicio");
+            $table->decimal("monto");
+            $table->foreignId("paciente_id")->constrained("pacientes")->onDelete("cascade");
+            $table->foreignId("citamedica_id")->constrained("citamedica")->onDelete("cascade");
             $table->timestamps();
         });
     }

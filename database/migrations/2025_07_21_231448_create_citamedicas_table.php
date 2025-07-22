@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('citamedica', function (Blueprint $table) {
             $table->id();
+            $table->date("fechaconsulta");
+            $table->time("horaconsulta");
+            $table->string("estado")->default("");
+            $table->string("estadopago");
+            $table->foreignId("medico_id")->constrained("medicos")->onDelete("cascade");
+            $table->foreignId("paciente_id")->constrained("pacientes")->onDelete("cascade");
             $table->timestamps();
         });
     }

@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class HistorialClinico extends Model
 {
-    
+    protected $table = 'historialesclinicos';
+
     protected $fillable = [
         "fechaCreacion",
         "HoraCreacion",
