@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\CitaMedica;
+use App\Models\Especialidad;
 use App\Models\Medico;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class CitaMedicaController extends Controller
 
     public function create(){
         $medicos =Medico::with('usuario')->get();
-        return view("citaMedica.create", compact("medicos"));
+        $especialidades = Especialidad::all();
+        return view("citaMedica.create", compact("medicos", "especialidades"));
     }
 
     public function store(Request $request){
@@ -37,8 +39,8 @@ class CitaMedicaController extends Controller
         CitaMedica::create([
             'fechaconsulta' => $request->fechaconsulta,
             'horaconsulta' => $request->horaconsulta,
-            'estado' => 'reserva', // Puedes ajustar este valor
-            'estadopago' => 'pendiente', // Puedes ajustar este también
+            'estado' => 'reserva', 
+            'estadopago' => 'pendiente', 
             'medico_id' => $request->medico_id,
             'paciente_id' => $paciente->id,
         ]);

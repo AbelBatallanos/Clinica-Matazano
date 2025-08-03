@@ -1,10 +1,35 @@
+@extends("layouts.dashboar.panel")
 
-<h1> HISTORIALES CLINICOS </h1>
+{{ $histClinicos }}
+@section("content")
 
-{{ auth()->user()->pacientes }}
+<div class="table-responsive">
+  <table class="table table-bordered table-hover align-middle text-center">
+    <thead class="table-secondary">
+      <tr>
+        <th>ID</th>
+        <th>fechacreacion</th>
+        <th>horacreacion</th>
+        <th>paciente</th>
+      </tr>
+    </thead>
+    <tbody class="table-striped table-light">
+        {{ $histClinicos }}
+        {{-- @forelse ($histClinicos as $histClinico)
+        <tr>    
+            <td>{{ $histClinico->id }}</td>
+            <td>{{ $histClinico->nameuser }}</td>
+            <td>{{ $histClinico->name }}</td>
+            <td>{{ $histClinico->lastname }}</td>
+            <td>{{ $histClinico->email }}</td>
+            <td>{{ $histClinico->ci }}</td>
+            <td>{{ $histClinico->fnacimiento }}</td>
+            <td>{{ $histClinico->telf }}</td>
+        </tr>
+            @empty
 
-@forelse ($histClinicos as $historialClinico )
-        <p>{{ $historialClinico }}</p>
-@empty
-    
-@endforelse
+        @endforelse --}}
+    </tbody>
+  </table>
+</div>
+@endsection 

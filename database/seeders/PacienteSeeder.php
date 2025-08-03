@@ -17,8 +17,6 @@ class PacienteSeeder extends Seeder
      */
     public function run(): void
     {
-        
-        
         $paciente_1 = User::create([
             "name"=> "Mario",
             "lastname" => "Armando Redondo",

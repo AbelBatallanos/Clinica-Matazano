@@ -16,6 +16,20 @@
         <label class="form-label">Hora de Consulta</label>
         <input type="time" name="horaconsulta" class="form-control" required>
     </div>
+    
+    <div class="mb-3">
+        <label class="form-label">Especialidades</label>
+        <select name="medico_id" class="form-select" required>
+            <option value="" selected disabled>Seleccione la especialidad</option>
+                @forelse ($especialidades as $especialidad )
+                     <option value="{{ $especialidad->id }}">  {{ $especialidad->nombre}}</option>
+                @empty
+                    
+                @endforelse
+               
+            
+        </select>
+    </div>
 
 
     <div class="mb-3">
@@ -35,7 +49,7 @@
     <button type="submit" class="btn btn-success">Guardar Reserva</button>
     <a href="" class="btn btn-secondary">Cancelar</a>
 </form>
-{{ $medicos }}
+
 @if ($errors->any())
   <div class="alert alert-danger">
     <ul>
