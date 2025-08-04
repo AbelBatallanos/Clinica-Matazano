@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->date("fechaconsulta");
             $table->time("horaconsulta");
-            $table->string("estado")->default("");
+            $table->string("estado");
             $table->string("estadopago");
             $table->foreignId("medico_id")->constrained("medicos")->onDelete("cascade");
             $table->foreignId("paciente_id")->constrained("pacientes")->onDelete("cascade");
+            $table->date("fechacreacion");       
             $table->timestamps();
         });
     }

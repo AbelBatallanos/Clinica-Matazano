@@ -19,7 +19,7 @@
 <nav class="d-flex">
     <div class="sidebar d-flex flex-column p-3 ">
 
-        <x-nav-rol datarol="{{ Auth::user()->getRoleNames()->first() }}"/>
+        <x-nav-rol datarol="{{ Auth::user()->getRoleNames()->first()}}"/>
        
         <div class="mt-auto pt-8">
             <div class="dropdown">

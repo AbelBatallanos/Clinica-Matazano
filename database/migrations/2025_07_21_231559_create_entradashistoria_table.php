@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date("fechaconsulta");
             $table->string("diagnostico");
             $table->string("tratamiento");
+            $table->string("motivo");
             $table->string("receta");
             $table->string("observaciones");
             $table->foreignId("medico_id")->constrained("medicos")->onDelete("cascade");

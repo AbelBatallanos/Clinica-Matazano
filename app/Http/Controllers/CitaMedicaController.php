@@ -8,6 +8,7 @@ use App\Models\Especialidad;
 use App\Models\Medico;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CitaMedicaController extends Controller
 {
@@ -15,6 +16,14 @@ class CitaMedicaController extends Controller
         $citas = CitaMedica::all();
         return view("citaMedica.list_citasMedics", compact("citas"));
     }
+
+    public function misCitas(Request $request){
+        $paciente_id = Auth::user()->paciente->id;
+        $citas = CitaMedica::where("paciente_id", $paciente_id)->get();
+        
+        return view("citaMedica.mis_citas", compact("citas"));
+    }
+
 
     public function create(){
         $medicos =Medico::with('usuario')->get();
@@ -39,13 +48,25 @@ class CitaMedicaController extends Controller
         CitaMedica::create([
             'fechaconsulta' => $request->fechaconsulta,
             'horaconsulta' => $request->horaconsulta,
-            'estado' => 'reserva', 
+            'estado' => 'activo', 
             'estadopago' => 'pendiente', 
             'medico_id' => $request->medico_id,
             'paciente_id' => $paciente->id,
         ]);
         // dd('Redireccionando...');
-        return redirect()->route('citas.index')->with('success', '¡Cita creada con éxito!');
+        return redirect()->route('Home')->with('success', '¡Cita creada con éxito!');
+
+    }
+
+    public function show($id){
+
+    }
+
+    public function update(){
+
+    }
+
+    public function destroy($id){
 
     }
 }

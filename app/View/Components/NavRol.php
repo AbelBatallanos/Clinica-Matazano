@@ -19,7 +19,7 @@ class NavRol extends Component
 
             case "admin":
                 $this->nav_rol = '
-                    <a href="'. route("home") .'"><i class="bi bi-house"></i> Inicio</a>
+                    <a href="'. route("Home") .'"><i class="bi bi-house"></i> Inicio</a>
                     <a href="'. route("listUsuarios") .'"><i class="bi bi-people"></i> Pacientes</a>
                     <a href="'. route("crearCita") .'"><i class="bi bi-calendar-check"></i> Reservas</a>
                     <a href="'. route("HistorialesClinicos") .'"><i class="bi bi-journal-medical"></i> Historiales</a>
@@ -27,7 +27,7 @@ class NavRol extends Component
                 break;
 
             case "secretaria":
-                 $this->nav_rol = ' <a href="'. route("home") .'"><i class="bi bi-house"></i> Inicio</a>
+                 $this->nav_rol = ' <a href="'. route("Home") .'"><i class="bi bi-house"></i> Inicio</a>
                     <a href="'. route("listUsuarios") .'"><i class="bi bi-people"></i> Pacientes</a>
                     
                     <a href="'. route("crearCita") .'"><i class="bi bi-calendar-check"></i> Citas Medicas</a>
@@ -36,7 +36,7 @@ class NavRol extends Component
                 break;
 
             case "medico":
-                 $this->nav_rol = '<a href="{{ route("home") }}"><i class="bi bi-house"></i> Inicio</a>
+                 $this->nav_rol = '<a href="'. route("Home") .'"><i class="bi bi-house"></i> Inicio</a>
                     <a href="'. route("listUsuarios") .'"><i class="bi bi-people"></i> Pacientes</a>
                     <a href="'. route("crearCita") .'"><i class="bi bi-calendar-check"></i> Reservas</a>
                     <a href="'. route("HistorialesClinicos") .'"><i class="bi bi-journal-medical"></i> Historiales</a>
@@ -45,10 +45,16 @@ class NavRol extends Component
                 
             case "paciente":
                  $this->nav_rol = '
-                    <a href="'. route("home") .'"><i class="bi bi-house"></i> Inicio</a>
-                    <a href="'. route("crearCita") .'"><i class="bi bi-calendar-check"></i> Reservas</a>
-                    <a href="'. route("HistorialesClinicos") .'"><i class="bi bi-journal-medical"></i> Historiales</a>
-                    <a href="'. route("HistorialesClinicos") .'"><i class="bi bi-journal-medical"></i> Paciente</a>';
+                    <a href="'. route("Home") .'"><i class="bi bi-house"></i> Inicio</a>
+                    <a href="'. route("crearCita") .'"><i class="bi bi-calendar-check"></i>Cita Medica
+                        <ul>
+                            <li>Reservar Cita</li>
+                            <li>Mis Citas</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="'. route("Mis-Citas") .'"><i class="bi bi-journal-medical"></i>Mis Citas</a>
+                    <a href="'. route("Mi-historial") .'"><i class="bi bi-journal-medical"></i>Mi Historial Clinico</a>';
                 break;
         }
 

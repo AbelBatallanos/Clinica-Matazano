@@ -19,8 +19,9 @@
     
     <div class="mb-3">
         <label class="form-label">Especialidades</label>
-        <select name="medico_id" class="form-select" required>
+        <select name="medico_id" class="form-select" >
             <option value="" selected disabled>Seleccione la especialidad</option>
+            
                 @forelse ($especialidades as $especialidad )
                      <option value="{{ $especialidad->id }}">  {{ $especialidad->nombre}}</option>
                 @empty
@@ -36,6 +37,7 @@
         <label class="form-label">Médico</label>
         <select name="medico_id" class="form-select" required>
             <option value="" selected disabled>Seleccione un médico</option>
+            <option value="5" >prueba</option>
                 @forelse ($medicos as $medico )
                      <option value="{{ $medico->id }}">  {{ $medico->usuario->name." ". $medico->usuario->lastname }}</option>
                 @empty
