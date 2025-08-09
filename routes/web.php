@@ -35,15 +35,15 @@ Route::prefix("inicio")->middleware(["auth"])->group(function(){
 //Funcionalidad Usuarios
 Route::prefix("Usuarios")->middleware(["auth"])->group(function(){
    
-    Route::get("/Editar-Usuario/{id}", [UsersController::class, "list"])->name("Editar-Usuario");
-    Route::put("/Editar-Usuario/{id}", [UsersController::class, "list"]); 
-    Route::delete("/Eliminar-Usuario/{id}", [UsersController::class, "destroy"])->name("Eliminar-Usuario");
-
+    Route::get("/Editar-Usuario/{id}", [UsersController::class, "edit"])->name("Editar-Usuario");
+    Route::put("/Editar-Usuario/{id}", [UsersController::class, "update"]); 
+    Route::get("/Pacientes", [UsersController::class, "getAllPacientes"])->name("listar-Usuarios");
+    
     Route::middleware(["role:admin|secretaria"])->group(function(){
-        Route::get("/Pacientes", [UsersController::class, "getAllPacientes"])->name("listUsuarios");
         Route::get("/Funcionarios", [UsersController::class, "getAllWorkers"])->name("Listar-Funcionarios");
         Route::get("/Crear-Usuario", [UsersController::class, "create"])->name("Crear-Usuario");
         Route::post("/Crear-Usuario", [UsersController::class, "store"]);
+        Route::delete("/Eliminar-Usuario/{id}", [UsersController::class, "destroy"])->name("Eliminar-Usuario");
     });
 });
 
@@ -84,17 +84,17 @@ Route::prefix("Nuevo/Historial")->middleware(["auth", "role:admin|medico"])->gro
 // Cita Medica
 Route::prefix("Cita-Medica")->group(function(){
     Route::middleware(["auth", "role:secretaria|paciente"])->group(function(){
-        Route::get("Mis-Citas", [CitaMedicaController::class, "misCitas"])->name("Mis-Citas");//Para que puedan ver todas sus citas realizadas
+        Route::get("Citas-Reservadas", [CitaMedicaController::class, "citasReservadas"])->name("Citas-Reservadas");//Para que puedan ver todas sus citas realizadas
         Route::get("/Reservar", [CitaMedicaController::class, "create"])->name("crearCita");
         Route::post("/Reservar", [CitaMedicaController::class, "store"]);
-        Route::get("/Editar-Cita/{id}", [CitaMedicaController::class, "show"])->name("showCita");
-        Route::put("/Editar-Cita/{id}", [CitaMedicaController::class, "update"]);
+       
         Route::delete("Cancelar-Cita", [ CitaMedicaController::class , "cancelarCita"] );
 
         Route::middleware(["auth", "role:medico|secretaria"])->group(function(){
+            Route::get("/Editar-Cita/{id}", [CitaMedicaController::class, "show"])->name("showCita");
+            Route::put("/Editar-Cita/{id}", [CitaMedicaController::class, "update"]);
             Route::delete("/Eliminar-Cita", [CitaMedicaController::class, "destroy"])->name("deleteCita");
-        });
-        
+        });     
     });
 });
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date("fechacreacion");
             $table->time("horacreacion");
+            
             $table->foreignId('paciente_id')->constrained("pacientes");
             $table->timestamps();
         });

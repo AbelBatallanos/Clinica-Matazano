@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('citamedica', function (Blueprint $table) {
             $table->id();
             $table->date("fechaconsulta");
+            $table->date("fechacreacion");       
             $table->time("horaconsulta");
+
             $table->string("estado");
             $table->string("estadopago");
+
             $table->foreignId("medico_id")->constrained("medicos")->onDelete("cascade");
             $table->foreignId("paciente_id")->constrained("pacientes")->onDelete("cascade");
-            $table->date("fechacreacion");       
+            $table->foreignId("consultorio_id")->constrained("consultorios")->onDelete("cascade");
+            
             $table->timestamps();
         });
     }

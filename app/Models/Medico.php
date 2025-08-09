@@ -15,10 +15,16 @@ class Medico extends Model
         "usuario_id",
     ];
 
+    public function citamedica(){
+        return $this->hasMany(CitaMedica::class);
+    }
 
+    public function usuario(){
+        return $this->belongsTo(User::class, "usuario_id");
+        //Practicamente biene ser la FK de Medico que se relaciona con su campo usuario_id con User
+    }
 
-    public function usuario()
-{
-    return $this->belongsTo(User::class);
-}
+    public function especialidad(){
+        return $this->belongsTo(Especialidad::class, "especialidad_id");
+    }
 }

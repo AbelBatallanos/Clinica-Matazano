@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('entradashistoria', function (Blueprint $table) {
             $table->id();
             $table->date("fechaconsulta");
+
             $table->string("diagnostico");
             $table->string("tratamiento");
             $table->string("motivo");
             $table->string("receta");
             $table->string("observaciones");
+            
             $table->foreignId("medico_id")->constrained("medicos")->onDelete("cascade");
             $table->foreignId("historialclinico_id")->constrained("historialesclinicos")->onDelete("cascade");
             $table->timestamps();

@@ -41,6 +41,7 @@ class User extends Authenticatable
         return $this->hasOne(Paciente::class, "usuario_id"); /* esto sirve para especificar las relaciones entre tablas
         hasOne es uno a uno , lo que sigue de ::class , le puse eso para cambiar el nombre del campo para que no haya errores cuando 
         quiera saber el id de usuario que tenga ese paciente */
+        
     }
 
     /**
