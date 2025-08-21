@@ -9,9 +9,9 @@ class Paciente extends Model
     //
     protected $fillable = ["usuario_id"];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+    
+    public function usuario(){
+        return $this->belongsTo(User::class, "usuario_id");
     }
 
     public function citamedica()

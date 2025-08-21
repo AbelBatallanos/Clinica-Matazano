@@ -7,6 +7,7 @@ use App\Models\CitaMedica;
 use App\Models\Especialidad;
 use App\Models\Medico;
 use App\Models\Paciente;
+use App\Models\Secretaria;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,23 +20,56 @@ class CitaMedicaController extends Controller
     }
 
     public function citasReservadas(Request $request){
-        $usuario =  Auth::user(); //Obtenemos el datos del usuario logeado
+       
         $usuario_rol = Auth::user()->getRoleNames()->first();
+      
+        $datos = [];
         if($usuario_rol == "secretaria"){
-            $citas = CitaMedica::with(['paciente', 'medico'])->get();
+            $secretaria = Secretaria::where("usuario_id", Auth::user()->id)->first();
+            // dd($secretaria->id);
+            $horaActual = now()->format('H:i:s'); 
 
-            $datos = $citas->map(function($cita){
+            $citas = CitaMedica::with(['paciente.usuario', 'medico.usuario', 'medico.especialidad','consultorio'])->whereHas("horario", function($query) use ($secretaria, $horaActual) 
+            {
+                $query->where("secretaria_id", $secretaria->id)
+                ->where("hora_ini", "<=", $horaActual)
+                ->where("hora_fin", ">=", $horaActual);
+            } )->get();
+            $datos = $citas->map(function($cita){ // Ordenamos los datos de la bd
                 return[
-                    'hora'=> $cita->horaconsulta,
-                    'fecha' => $cita->fechaconsulta,
-                    'usuario_id' => $cita->paciente->usuario_id,
+                    'paciente' => $cita->paciente->usuario->name." ".$cita->paciente->usuario->lastname,
+                    'hconsulta'=> $cita->horaconsulta,
+                    'fconsulta' => $cita->fechaconsulta,
+                    'medico' => $cita->medico->usuario->name." ".$cita->medico->usuario->lastname,
+                    'consultorio' => $cita->consultorio->nhabitacion,
+                    'especialidad' => $cita->medico->especialidad->nombre,
+                    'estado' => $cita->estado,
+                    'estadopago' => $cita->estadopago,
+                    'fcreacion' => $cita->fechacreacion,
                 ];
             });     
-            dd($datos);
+            // dd($datos);
+            return view("citaMedica.reservadas.citas_reservadas_secretaria", compact("datos"));
         }
         elseif($usuario_rol == "paciente"){
-            $citas  = CitaMedica::where("paciente_id", $usuario->id)->get();
-            dd($citas);
+            $usuario =  Auth::user(); //Obtenemos el datos del usuario logeado
+            $paciente = Paciente::where("usuario_id", $usuario->id)->first();
+
+            $citas  = CitaMedica::with(["medico.usuario", "paciente.usuario", 'medico.especialidad' ,"consultorio"])->where("paciente_id", $paciente->id)->get();
+            $datos = $citas->map(function($cita){  // Ordenamos los datos de la bd
+                return [
+                    'fconsulta' => $cita->fechaconsulta,
+                    'hconsulta' => $cita->horaconsulta,
+                    'medico' => $cita->medico->usuario->name." ".$cita->medico->usuario->lastname,
+                    'consultorio' => $cita->consultorio->nhabitacion,
+                    'especialidad' => $cita->medico->especialidad->nombre,
+                    'fcreacion' => $cita->fechacreacion,
+                    'estadopago' => $cita->estadopago,
+                    'estado' => $cita->estado
+                ];
+            });
+            // dd($datos);
+            return view("citaMedica.reservadas.citas_reservadas_paciente", compact("datos") );
         }
         
         // $citas = CitaMedica::where("paciente_id", $paciente_id)->get();
@@ -55,9 +89,12 @@ class CitaMedicaController extends Controller
     }
 
     public function store(Request $request){
+        // dd($request->all());
+        $turno = "";
         $rules = [
             "fechaconsulta" => ['required', 'date'],
             "horaconsulta" => ['required', 'date_format:H:i'],
+            "especialidades" => 'required|exists:especialidades,id',
             "medico_id" => ['required', 'exists:medicos,id'],
             "name" => "required|string|max:100",
             "lastname"  => "required|string|max:100",
@@ -65,31 +102,51 @@ class CitaMedicaController extends Controller
          ];
         
         $validated = $request->validate($rules);
-
-        $usuario = User::where('name', $request->name)->where("lastname", $request->lastname)->first();
-
-        // dd($request->medico_id);
-        $paciente = Paciente::where("usuario_id", $usuario->id)->first();
+        // dd(explode(":",$request->horaconsulta)[1]);
+        if($request->horaconsulta <= "12"){
+            $turno = "1";
+        }
+        $turno = "2";
         
-        CitaMedica::create([
-            'fechaconsulta' => $request->fechaconsulta,
-            'fechacreacion' => now(),
-            'horaconsulta' => $request->horaconsulta,
-            'estado' => 'activo', 
-            'estadopago' => 'pendiente', 
-            'medico_id' => $request->medico_id,
-            'paciente_id' => $paciente->id,
-            'consultorio_id' => 1,
-            "created_at" => now(),
-            "updated_at" => now(),
-        ]);
+        if(!$validated){
+            return redirect()->route('Home')->with('success', 'No se pudo Crear');
+        }
+        try {
+           $usuario = User::where('name', $request->name)->where("lastname", $request->lastname)->where("ci", $request->ci)->first();
+            
 
-        return redirect()->route('Home')->with('success', '¡Cita creada con éxito!');
+            if(!$usuario) return redirect()->route('Home')->with('success', 'Paciente no registrado');
+
+            // dd($request->medico_id);
+            $paciente = Paciente::where("usuario_id", $usuario->id)->first();
+            
+            CitaMedica::create([
+                'fechaconsulta' => $request->fechaconsulta,
+                'fechacreacion' => now(),
+                'horaconsulta' => $request->horaconsulta,
+                'estado' => 'activo', 
+                'estadopago' => 'pendiente', 
+                'medico_id' => $request->medico_id,
+                'paciente_id' => $paciente->id,
+                'consultorio_id' => 1,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ]);
+
+            return redirect()->route('Home')->with('success', '¡Cita creada con éxito!');
+        } catch (\Throwable $th) {
+            
+        }
+        
 
     }
 
     public function show($id){
+        $cita = CitaMedica::where("id", $id)->first();
 
+        if(!$cita) return redirect()->route("Home")->with(["error" => "No Se encontro esa Cita Medica"]);
+
+        return ;
     }
 
     public function update(){

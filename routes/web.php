@@ -84,11 +84,9 @@ Route::prefix("Nuevo/Historial")->middleware(["auth", "role:admin|medico"])->gro
 // Cita Medica
 Route::prefix("Cita-Medica")->group(function(){
     Route::middleware(["auth", "role:secretaria|paciente"])->group(function(){
-        Route::get("Citas-Reservadas", [CitaMedicaController::class, "citasReservadas"])->name("Citas-Reservadas");//Para que puedan ver todas sus citas realizadas
-        Route::get("/Reservar", [CitaMedicaController::class, "create"])->name("crearCita");
+        Route::get("Reservadas", [CitaMedicaController::class, "citasReservadas"])->name("Citas-Reservadas");//Para que puedan ver todas sus citas realizadas
+        Route::get("/Reservar", [CitaMedicaController::class, "create"])->name("crearCita");//Crea Citas
         Route::post("/Reservar", [CitaMedicaController::class, "store"]);
-       
-        Route::delete("Cancelar-Cita", [ CitaMedicaController::class , "cancelarCita"] );
 
         Route::middleware(["auth", "role:medico|secretaria"])->group(function(){
             Route::get("/Editar-Cita/{id}", [CitaMedicaController::class, "show"])->name("showCita");

@@ -9,6 +9,6 @@ class Consultorio extends Model
     //
     protected $fillable = ["horainicial", "horafinal", "disponibilidad", "horauso", "medico_id", ];
 
-
+    
     
 }

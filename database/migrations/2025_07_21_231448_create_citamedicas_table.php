@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId("medico_id")->constrained("medicos")->onDelete("cascade");
             $table->foreignId("paciente_id")->constrained("pacientes")->onDelete("cascade");
             $table->foreignId("consultorio_id")->constrained("consultorios")->onDelete("cascade");
-            
+            $table->foreignId("horarios_trabajo_id")->constrained("horarios_trabajo")->onDelete("cascade");
             $table->timestamps();
         });
     }
