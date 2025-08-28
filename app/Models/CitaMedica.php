@@ -9,8 +9,15 @@ class CitaMedica extends Model
     //
     protected $table = 'citamedica';
 
-    protected $fillable = ["fechaconsulta", "fechacreacion", "horaconsulta", "estado",
-    "estadopago", "consultorio_id", "medico_id", "paciente_id", "horarios_trabajo_id"];
+    protected $fillable = [ "fechaconsulta", 
+                            "fechacreacion", 
+                            "horaconsulta", 
+                            "estado",
+                            "estadopago", 
+                            "consultorio_id", 
+                            "medico_id", 
+                            "paciente_id",
+                            "horarios_trabajo_id"];
 
     public function paciente(){
 
@@ -26,6 +33,6 @@ class CitaMedica extends Model
     }
 
     public function horario(){
-        return $this->belongsTo(horariotrabajo::class);
+        return $this->belongsTo(Horariotrabajo::class, "horarios_trabajo_id");
     }
 }

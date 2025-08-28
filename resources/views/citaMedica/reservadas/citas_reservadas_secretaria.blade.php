@@ -7,6 +7,7 @@
   <table class="table table-bordered table-hover align-middle text-center">
     <thead class="table-secondary">
       <tr>
+        <th>ID</th>
         <th>Paciente</th>
         <th>Fecha-Consulta</th>
         <th>hora-Consulta</th>
@@ -24,6 +25,7 @@
       
         @forelse ($datos as $cita)
         <tr>    
+            <td>{{ $cita["id"] }}</td>
             <td>{{ $cita["paciente"] }}</td>
             <td>{{ $cita["fconsulta"] }}</td>
             <td>{{ $cita["hconsulta"] }}</td>

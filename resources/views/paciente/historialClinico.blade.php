@@ -1,6 +1,6 @@
 @extends("layouts.dashboar.panel")
 
-{{ $histClinicos }}
+{{-- {{ $historiales }} --}}
 @section("content")
 
 <div class="table-responsive">
@@ -8,27 +8,29 @@
     <thead class="table-secondary">
       <tr>
         <th>ID</th>
+        <th>Paciente</th>
         <th>fechacreacion</th>
         <th>horacreacion</th>
-        <th>paciente</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody class="table-striped table-light">
-        {{ $histClinicos }}
-        {{-- @forelse ($histClinicos as $histClinico)
+       
+        @forelse ($historiales as $histClinico)
         <tr>    
-            <td>{{ $histClinico->id }}</td>
-            <td>{{ $histClinico->nameuser }}</td>
-            <td>{{ $histClinico->name }}</td>
-            <td>{{ $histClinico->lastname }}</td>
-            <td>{{ $histClinico->email }}</td>
-            <td>{{ $histClinico->ci }}</td>
-            <td>{{ $histClinico->fnacimiento }}</td>
-            <td>{{ $histClinico->telf }}</td>
+          <td>{{ $histClinico["historia_id"] }}</td>
+          <td>{{ $histClinico["nombre"]." ".$histClinico["apellidos"] }}</td>
+          <td>{{ $histClinico["fechacreada"] }}</td>
+          <td>{{ $histClinico["horacreada"] }}</td>
+      
+          <td>
+            <button>CLick</button>
+            <button>CLick2</button>
+          </td>
         </tr>
             @empty
 
-        @endforelse --}}
+        @endforelse
     </tbody>
   </table>
 </div>

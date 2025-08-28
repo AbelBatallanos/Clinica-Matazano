@@ -27,4 +27,9 @@ class Medico extends Model
     public function especialidad(){
         return $this->belongsTo(Especialidad::class, "especialidad_id");
     }
+    
+    public function horariotrabajo(){
+        return $this->hasMany(Horariotrabajo::class);
+    }
+    
 }

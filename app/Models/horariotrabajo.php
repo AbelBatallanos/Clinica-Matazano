@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class horariotrabajo extends Model
+class Horariotrabajo extends Model
 {
     //
-    protected $fillable = ["medico_id", "secretaria_id", "consultorio_id", "fecha_ini", "fecha_fin",
+     protected $table = 'horarios_trabajo';
+
+    protected $fillable = ["medico_id", "secretaria_id", "especialidad_id", "consultorio_id", "fecha_ini", "fecha_fin",
     "hora_ini", "hora_fin", "estado"];
 
 

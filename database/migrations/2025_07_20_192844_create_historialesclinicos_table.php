@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date("fechacreacion");
             $table->time("horacreacion");
             
-            $table->foreignId('paciente_id')->constrained("pacientes");
+            $table->foreignId('paciente_id')->constrained("pacientes")->onDelete("cascade");
             $table->timestamps();
         });
     }

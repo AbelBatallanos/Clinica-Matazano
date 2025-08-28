@@ -8,4 +8,9 @@ class Secretaria extends Model
 {
     //
     protected $fillable = ["usuario_id"];
+
+    public function usuario(){
+        return $this->belongsTo(User::class, "usuario_id");
+    }
+
 }

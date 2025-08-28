@@ -17,11 +17,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('lastname');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('telf');
             $table->string('ci');
             $table->string('password');
             $table->date('fnacimiento');
-            $table->string('telf');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->foreignId("role_id")->constrained("roles")->onDelete("cascade");
             $table->rememberToken();
             $table->timestamps();
         });
